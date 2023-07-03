@@ -3,11 +3,13 @@ MySQL, .NET, Angular Project that is relevant for our age
 
 ![image](https://github.com/S4UR000N/webshop2023/assets/36705659/912cf964-ceea-4b93-89ec-4f4a1b8a4df8)
 
+# not all db schema is shown because app that I am using is very clean but allows only 15 tables in the free plan T_T
 
 ![image](https://github.com/S4UR000N/webshop2023/assets/36705659/93789dcd-da5b-4f2d-8205-76127126ad1b)
 
 
-![image](https://github.com/S4UR000N/webshop2023/assets/36705659/0c3e2e52-ab8b-45b7-8f98-9dc861c22f24)
+![image](https://github.com/S4UR000N/webshop2023/assets/36705659/32f80f1d-b5eb-4b04-84e3-a838c5849c57)
+
 
 ```
 Tables:                 | Relations: |
