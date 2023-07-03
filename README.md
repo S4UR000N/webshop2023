@@ -9,7 +9,7 @@ MySQL, .NET, Angular Project that is relevant for our age
 
 ![image](https://github.com/S4UR000N/webshop2023/assets/36705659/0c3e2e52-ab8b-45b7-8f98-9dc861c22f24)
 
-
+```
 Tables:                 | Relations: |
 = = = = = = = = = = = = | = = = = = =|
 1. Users                |            |
@@ -36,3 +36,4 @@ Relational              |
 19. Tags Products       |
 20. Product Sizes       |
 ========================|
+```
