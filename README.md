@@ -11,7 +11,7 @@ MySQL, .NET, Angular Project that is relevant for our age
 ![image](https://github.com/S4UR000N/webshop2023/assets/36705659/32f80f1d-b5eb-4b04-84e3-a838c5849c57)
 
 
-```
+
 Tables:                 | Relations: |
 = = = = = = = = = = = = | = = = = = =|
 1. Users                |            |
@@ -19,23 +19,24 @@ Tables:                 | Relations: |
 3. Stock                |            |
 4. Orders               |            |
 5. Items                |            |
-6. OrderItems           |            |
-7. Likes                |            |
-8. Genders              |            |
-9. Colors               |            |
-10. Categories          |            |
-11. Tags                |            |
-12. Sizes               |            |
-13. Size And Fit        |            |
-14. Product Details     |            |
-15. Brands              |            |
-16. Look After Me       |            |
-17. Status              |            |
+6. Payments             |            |
+7. Order Items          |            |
+8. Likes                |            |
+9. Genders              |            |
+10. Colors              |            |
+11. Categories          |            |
+12. Tags                |            |
+13. Sizes               |            |
+14. Size And Fit        |            |
+15. Product Details     |            |
+16. Brands              |            |
+17. Look After Me       |            |
+18. Status              |            |
 = = = = = = = = = = = = |============/
 Relational              |
 = = = = = = = = = = = = |
-18. Categories Products |
-19. Tags Products       |
-20. Product Sizes       |
+19. Categories Products |
+20. Tags Products       |
+21. Product Sizes       |
 ========================|
 ```
