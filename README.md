@@ -3,6 +3,9 @@ MySQL, .NET, Angular Project that is relevant for our age
 
 ![image](https://github.com/S4UR000N/webshop2023/assets/36705659/912cf964-ceea-4b93-89ec-4f4a1b8a4df8)
 
+![image](https://github.com/S4UR000N/webshop2023/assets/36705659/8070b16f-a9aa-4c46-9564-86dac7024b37)
+
+
 # not all db schema is shown because app that I am using is very clean but allows only 15 tables in the free plan T_T
 
 ![image](https://github.com/S4UR000N/webshop2023/assets/36705659/93789dcd-da5b-4f2d-8205-76127126ad1b)
