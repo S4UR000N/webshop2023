@@ -8,19 +8,21 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.AddCors();
-builder.AddLogger();
+//builder.AddLogger();
 builder.AddPersistence();
 
 var app = builder.Build();
 
+app.UseSwagger();
+app.UseSwaggerUI();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
-app.UseHsts();
+//app.UseHttpsRedirection();
+//app.UseHsts();
 
 app.UseCors("DefaultCorsPolicy");
 

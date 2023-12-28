@@ -10,7 +10,7 @@ namespace Persistence.DependencyInjection
         public static WebApplicationBuilder AddPersistence(this WebApplicationBuilder builder)
         {
             builder.CreateDbContext<RelationalContext>(DbType.MySql);
-            builder.CreateDbClient<DocumentContext>(DbType.MongoDb);
+            //builder.CreateDbClient<DocumentContext>(DbType.MongoDb);
 
             return builder;
         }

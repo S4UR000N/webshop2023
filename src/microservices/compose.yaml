@@ -1,0 +1,66 @@
+services:
+  user_api:
+    image: df_user_api:latest
+    container_name: user_api
+    build:
+      context: .
+      dockerfile: df_user_api
+    ports: [5114:5114]
+    depends_on: [mysql]
+    networks: [associated]
+    environment:
+        - ASPNETCORE_ENVIRONMENT=development
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: roottooR1!
+      MYSQL_DATABASE: webshop2023
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test123
+      MYSQL_LOG_CONSOLE: "1"
+      MYSQL_LOG_ERROR: "/var/log/mysql/error.log"
+    ports: [3306:3306]
+    networks: [associated]
+    volumes:
+      - "mysql-data:/var/lib/mysql"
+      - "mysql-log:/var/log/mysql"
+      - "mysql-conf:/etc/mysql/conf.d"
+networks:
+  associated:
+    name: associated
+volumes:
+  mysql-data:
+    driver: local
+  mysql-log:
+    driver: local
+  mysql-conf:
+    driver: local
+
+# services:
+#   kafka:
+#     image: bitnami/kafka:latest
+#     container_name: "kafka"
+#     ports:
+#       - "9092:9092"
+#       - "9093:9093" 
+#       - "9094:9094"
+#     volumes:
+#       - "kafka_data:/bitnami"
+#     environment:
+#       # KRaft settings
+#       - KAFKA_CFG_NODE_ID=0
+#       - KAFKA_CFG_PROCESS_ROLES=controller,broker
+#       - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=0@kafka:9093
+#       - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=true
+#       # Listeners
+#       - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://0.0.0.0:9094
+#       - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://:9092,EXTERNAL://localhost:9094
+#       - KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP=CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+#       - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+#       - KAFKA_CFG_INTER_BROKER_LISTENER_NAME=PLAINTEXT
+#       - KAFKA_CFG_LISTENER_BOOTSTRAP_SERVERS=kafka:9092
+# volumes:
+#   kafka_data:
+#     driver: local

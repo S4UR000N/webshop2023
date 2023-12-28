@@ -1,0 +1,25 @@
+#See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS base
+WORKDIR /app
+EXPOSE 5114
+ENV ASPNETCORE_URLS=http://+:5114
+
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /src
+COPY ["User/User.API/User.csproj", "User/User.API/"]
+COPY ["Associated/Application/_Application.csproj", "Associated/Application/"]
+COPY ["User/Persistence/Persistence.csproj", "User/Persistence/"]
+COPY ["Associated/Persistence/_Persistence.csproj", "Associated/Persistence/"]
+RUN dotnet restore "User/User.API/User.csproj"
+COPY . .
+WORKDIR "/src/User/User.API"
+RUN dotnet build "User.csproj" -c Release -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "User.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "User.dll"]
