@@ -1,0 +1,86 @@
+{{- $d := .Values.deployment }}
+{{- $p := .Values.pod }}
+{{- range $cc := .Values.clusterConfigs }}
+{{- $ccd := $cc.deployment }}
+{{- $ccp := $cc.pod }}
+{{- $dId := include "webshop2024.manifestName" (dict "manifestType" "deployment"  "serviceName" $cc.name "name" (include "webshop2024.name" $) "version" (include "webshop2024.chartVersion" $)) }}
+{{- $pId := include "webshop2024.manifestName" (dict "manifestType" "pod"  "serviceName" $cc.name "name" (include "webshop2024.name" $) "version" (include "webshop2024.chartVersion" $)) }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ $dId }}
+  namespace: {{ include "webshop2024.namespace" $ }}
+  labels:
+    deploymentId: {{ $dId }}
+    {{- include "webshop2024.labels" $ | nindent 4 }}
+spec:
+  {{- if not $.Values.autoscaling.enabled }}
+  replicas: {{ $d.replicas }}
+  {{- end }}
+  selector:
+    matchLabels:
+      podId: {{ $pId }}
+      {{- include "webshop2024.labels" $ | nindent 6 }}
+  template:
+    metadata:
+      namespace: {{ include "webshop2024.namespace" $ }}
+      {{- with $.Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        podId: {{ $pId }}
+        {{- include "webshop2024.labels" $ | nindent 8 }}
+	      {{- with $.Values.podLabels }}
+          {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with $p.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "webshop2024.serviceAccountName" $ }}
+      securityContext:
+        {{- toYaml $.Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ $pId }}
+          securityContext:
+            {{- toYaml $.Values.securityContext | nindent 12 }}
+          image: "{{ $ccp.image }}:{{ $ccp.tag }}"
+          imagePullPolicy: {{ $p.imagePullPolicy }}
+          livenessProbe:
+            httpGet:
+              path: /Health/Alive
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /Health/Ready
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          resources:
+            {{- toYaml $.Values.resources | nindent 12 }}
+          {{- with $.Values.volumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with $.Values.volumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with $.Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+---
+{{- end -}}

@@ -1,0 +1,13 @@
+app.kubernetes.io/name
+helm.sh/chart
+app.kubernetes.io/managed-by
+app.kubernetes.io/instance
+
+"webshop2024.labels"
+helm.sh/chart:
+app.kubernetes.io/version:
+app.kubernetes.io/managed-by:
+
+"webshop2024.selectorLabels"
+app.kubernetes.io/name:
+app.kubernetes.io/instance:

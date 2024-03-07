@@ -1,0 +1,26 @@
+{{- $s := .Values.service }}
+{{- range $cc := .Values.clusterConfigs }}
+{{- $ccs := $cc.service }}
+{{- $ccp := $cc.pod }}
+{{- $sId := include "webshop2024.manifestName" (dict "manifestType" "service"  "serviceName" $cc.name "name" (include "webshop2024.name" $) "version" (include "webshop2024.chartVersion" $)) }}
+{{- $pId := include "webshop2024.manifestName" (dict "manifestType" "pod"  "serviceName" $cc.name "name" (include "webshop2024.name" $) "version" (include "webshop2024.chartVersion" $)) }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-name
+  namespace: {{ include "webshop2024.namespace" $ }}
+  labels:
+    serviceId: {{ $sId }}
+    {{- include "webshop2024.labels" $ | nindent 4 }}
+spec:
+  type: {{ $ccs.type | default $s.type }}
+  ports:
+    - port: {{ $ccs.port | default $s.port }}
+      targetPort: {{ $ccs.targetPort | default $s.targetPort }}
+      protocol: {{ $ccs.protocol | default $s.protocol }}
+      name: {{ $ccs.name | default $s.name }}
+  selector:
+    podId: {{ $pId }}
+    {{- include "webshop2024.labels" $ | nindent 4 }}
+---
+{{- end -}}

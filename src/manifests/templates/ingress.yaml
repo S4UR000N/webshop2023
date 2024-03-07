@@ -1,0 +1,26 @@
+{{- $s := .Values.service }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-nginx
+  namespace: {{ include "webshop2024.namespace" $ }}
+  annotations:
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$2
+spec:
+  ingressClassName: nginx
+  rules:
+  {{- range $cc := .Values.clusterConfigs }}
+  {{- $ccs := $cc.service }}
+  {{- $sId := include "webshop2024.manifestName" (dict "manifestType" "service"  "serviceName" $cc.name "name" (include "webshop2024.name" $) "version" (include "webshop2024.chartVersion" $)) }}
+    - host: localhost
+      http:
+        paths:
+          - path: "/{{$sId}}(/|$)(.*)"
+            pathType: Prefix
+            backend:
+              service:
+                name: service-name
+                port:
+                  number: {{ $ccs.port | default $s.port }}
+  {{- end -}}
